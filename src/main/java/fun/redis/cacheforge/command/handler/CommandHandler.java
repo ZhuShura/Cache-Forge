@@ -1,6 +1,7 @@
-package command.handler;
+package fun.redis.cacheforge.command.handler;
 
-import command.model.Command;
+
+import fun.redis.cacheforge.command.model.Command;
 
 /**
  * 命令处理接口

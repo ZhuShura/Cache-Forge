@@ -1,4 +1,4 @@
-package util;
+package fun.redis.cacheforge.utils;
 
 public class WordArtUtil {
 	public static void wordArtDraw() {

@@ -2,8 +2,6 @@ package fun.redis.cacheforge.protocol.model;
 
 import io.netty.buffer.ByteBuf;
 
-import java.util.List;
-
 /**
  * 解码出的消息
  * @author huangtaiji

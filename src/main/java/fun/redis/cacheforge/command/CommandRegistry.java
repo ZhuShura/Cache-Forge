@@ -1,7 +1,7 @@
-package command;
+package fun.redis.cacheforge.command;
 
 
-import command.handler.CommandHandler;
+import fun.redis.cacheforge.command.handler.CommandHandler;
 
 import java.util.HashMap;
 import java.util.Map;

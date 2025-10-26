@@ -1,7 +1,8 @@
-package command.handler.impl;
+package fun.redis.cacheforge.command.handler.impl;
 
-import command.handler.WriteCommandHandler;
-import command.model.Command;
+
+import fun.redis.cacheforge.command.handler.WriteCommandHandler;
+import fun.redis.cacheforge.command.model.Command;
 
 /**
  * set命令处理器

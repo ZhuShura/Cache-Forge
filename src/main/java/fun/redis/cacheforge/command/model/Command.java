@@ -1,4 +1,4 @@
-package command.model;
+package fun.redis.cacheforge.command.model;
 
 /**
  * 命令接口
