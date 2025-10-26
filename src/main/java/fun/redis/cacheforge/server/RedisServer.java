@@ -2,6 +2,7 @@ package fun.redis.cacheforge.server;
 
 import fun.redis.cacheforge.config.ServerConfig;
 import fun.redis.cacheforge.handler.MessageHandler;
+import fun.redis.cacheforge.protocol.RespDecoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -26,9 +27,8 @@ public class RedisServer {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         socketChannel.pipeline()
-                                .addLast(new RedisDecoder())
+                                .addLast(new RespDecoder())
                                 .addLast(new RedisEncoder())
-                                .addLast(new RedisArrayAggregator())
                                 .addLast(new MessageHandler());
                     }
                 });
