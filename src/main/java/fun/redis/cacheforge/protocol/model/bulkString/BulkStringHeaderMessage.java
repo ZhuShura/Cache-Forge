@@ -1,4 +1,4 @@
-package fun.redis.cacheforge.protocol.model.header;
+package fun.redis.cacheforge.protocol.model.bulkString;
 
 import fun.redis.cacheforge.common.CacheForgeCodecException;
 import fun.redis.cacheforge.common.CacheForgeConstants;
