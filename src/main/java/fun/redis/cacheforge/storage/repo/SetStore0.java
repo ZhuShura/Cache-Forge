@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * @author hua
  * @date 2025/10/26
  */
-public class SetStore {
+public class SetStore0 {
     private static final Map<String, Set<String>> SET_MAP = new ConcurrentHashMap<>();
 
     /**
