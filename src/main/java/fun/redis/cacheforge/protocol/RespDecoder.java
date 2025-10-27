@@ -280,7 +280,7 @@ public final class RespDecoder extends ByteToMessageDecoder {
 	 */
 	private static void readEndOfLine(ByteBuf in) {
 		final short delimiter = in.readShort();
-		if (CacheForgeConstants.EOL_LENGTH == delimiter) {
+		if (CacheForgeConstants.EOL_SHORT == delimiter) {
 			return;
 		}
 		final byte[] bytes = CacheForgeCodecUtil.shortToBytes(delimiter);

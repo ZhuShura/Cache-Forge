@@ -71,6 +71,15 @@ public class CacheForgeCodecUtil {
 		}
 	}
 
+
+	/**
+	 * 字符生成short类型
+	 */
+	public static short makeShort(char first, char second) {
+		return PlatformDependent.BIG_ENDIAN_NATIVE_ORDER ?
+				(short) ((second << 8) | first) : (short) ((first << 8) | second);
+	}
+
 	/**
 	 * short转byte[]
 	 * 实现大端序和小端序不同字节序的处理方式
