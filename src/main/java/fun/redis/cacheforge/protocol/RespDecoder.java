@@ -3,8 +3,8 @@ package fun.redis.cacheforge.protocol;
 import fun.redis.cacheforge.common.CacheForgeCodecException;
 import fun.redis.cacheforge.common.CacheForgeConstants;
 import fun.redis.cacheforge.common.MessageType;
-import fun.redis.cacheforge.protocol.model.header.ArrayHeaderMessage;
-import fun.redis.cacheforge.protocol.model.header.BulkStringHeaderMessage;
+import fun.redis.cacheforge.protocol.model.array.ArrayHeaderMessage;
+import fun.redis.cacheforge.protocol.model.bulkString.BulkStringHeaderMessage;
 import fun.redis.cacheforge.protocol.model.generalizedInline.IntegerMessage;
 import fun.redis.cacheforge.protocol.model.Message;
 import fun.redis.cacheforge.protocol.model.bulkString.DefaultBulkStringContent;
@@ -32,7 +32,7 @@ import java.util.List;
  * @author huangtaiji
  * @date 2025/10/26
  */
-public class RespDecoder extends ByteToMessageDecoder {
+public final class RespDecoder extends ByteToMessageDecoder {
 
 	/**
 	 * 解码器初始化参数
