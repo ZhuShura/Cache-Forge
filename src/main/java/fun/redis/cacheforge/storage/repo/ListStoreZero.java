@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author hua
  * @date 2025/10/26
  */
-public class ListStore0 {
+public class ListStoreZero {
     private static final String NIL = "nil";
     private static final Map<String, List<String>> LIST_MAP = new ConcurrentHashMap<>();
 

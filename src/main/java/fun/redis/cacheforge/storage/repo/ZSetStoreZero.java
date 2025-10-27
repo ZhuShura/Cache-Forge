@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author hua
  * @date 2025/10/26
  */
-public class ZSetStore0 {
+public class ZSetStoreZero {
     /**
      * 默认按score升序排序, score相同时按member字典序排序
      */

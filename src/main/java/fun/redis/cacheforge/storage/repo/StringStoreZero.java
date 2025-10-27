@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author hua
  * @date 2025/10/26
  */
-public class StringStore0 {
+public class StringStoreZero {
     private static final String NIL = "nil";
     private static final String INT = "int";
     private static final Integer CHANGE_NUM = 1;
