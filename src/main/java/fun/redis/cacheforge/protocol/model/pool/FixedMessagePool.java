@@ -59,6 +59,7 @@ public final class FixedMessagePool implements MessagePool {
 		WRONGTYPE("WRONGTYPE Operation against a key holding the wrong kind of value"),
 		NOT_AUTH("NOAUTH Authentication required.");
 
+
 		private final String msg;
 
 		ErrorKey(String msg) {
