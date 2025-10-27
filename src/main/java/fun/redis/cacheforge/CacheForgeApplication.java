@@ -10,7 +10,6 @@ import fun.redis.cacheforge.utils.WordArtUtil;
  */
 public class CacheForgeApplication {
 	public static void main(String[] args) {
-		WordArtUtil.wordArtDraw();
 		RedisServer.start();
 	}
 }

@@ -56,7 +56,7 @@ public class ListStore {
         List<String> list = checkKey(key);
         List<String> removed = new ArrayList<>();
         while (count -- > 0 && !list.isEmpty()) {
-            removed.add(list.removeFirst());
+            removed.add(list.remove(0));
         }
         LIST_MAP.put(key, list);
         return removed;
@@ -73,7 +73,7 @@ public class ListStore {
         List<String> list = checkKey(key);
         List<String> removed = new ArrayList<>();
         while (count -- > 0 && !list.isEmpty()) {
-            removed.add(list.removeLast());
+            removed.add(list.remove(list.size() - 1));
         }
         LIST_MAP.put(key, list);
         return removed;
@@ -187,10 +187,10 @@ public class ListStore {
     public static String rPopLPush(String source, String destination) {
         List<String> rList = checkKey(source);
         List<String> lList = checkKey(destination);
-        lList.add(0, rList.removeLast());
+        lList.add(0, rList.remove(lList.size() - 1));
         LIST_MAP.put(source, rList);
         LIST_MAP.put(destination, lList);
-        return rList.getLast();
+        return rList.get(rList.size() - 1);
     }
 
     /**
