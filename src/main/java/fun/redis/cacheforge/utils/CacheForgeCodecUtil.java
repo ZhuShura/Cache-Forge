@@ -7,6 +7,8 @@ import io.netty.util.ByteProcessor;
 import io.netty.util.CharsetUtil;
 import io.netty.util.internal.PlatformDependent;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * 编解码工具类
  * @author huangtaiji
@@ -17,6 +19,16 @@ public class CacheForgeCodecUtil {
 	private static final ToPositiveLongProcessor processor = new ToPositiveLongProcessor();
 
 	private CacheForgeCodecUtil(){}
+
+
+
+	/**
+	 * long转byte[](Ascii)
+	 */
+	public static byte[] longToAsciiBytes(long value) {
+		return Long.toString(value).getBytes(StandardCharsets.US_ASCII);
+	}
+
 
 	/**
 	 * 解析数字
@@ -70,7 +82,6 @@ public class CacheForgeCodecUtil {
 			result = 0;
 		}
 	}
-
 
 	/**
 	 * 字符生成short类型

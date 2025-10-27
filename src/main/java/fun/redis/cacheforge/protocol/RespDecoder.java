@@ -128,7 +128,7 @@ public final class RespDecoder extends ByteToMessageDecoder {
 	 * 解码类型
 	 */
 	private void decodeType(ByteBuf in) throws Exception{
-		type = MessageType.readForm(in, decodeInlineCommands);
+		type = MessageType.readFrom(in, decodeInlineCommands);
 		state = type.isInline() ? State.DECODE_INLINE : State.DECODE_LENGTH;
 	}
 
