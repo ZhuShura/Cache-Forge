@@ -5,6 +5,7 @@ import fun.redis.cacheforge.common.CacheForgeConstants;
 import fun.redis.cacheforge.protocol.model.generalizedInline.ErrorMessage;
 import fun.redis.cacheforge.protocol.model.generalizedInline.IntegerMessage;
 import fun.redis.cacheforge.protocol.model.generalizedInline.SimpleStringMessage;
+import fun.redis.cacheforge.utils.CacheForgeCodecUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.util.CharsetUtil;
@@ -18,13 +19,14 @@ import java.util.Map;
  * @author huangtaiji
  * @date 2025/10/26
  */
-public class FixedMessagePool implements MessagePool {
+public final class FixedMessagePool implements MessagePool {
 	/**
 	 * 缓存数据引擎
 	 */
 	private final Map<ByteBuf, SimpleStringMessage> byteBufToSimpleStrings;
 	private final Map<ByteBuf, ErrorMessage> byteBufToErrors;
 	private final Map<ByteBuf, IntegerMessage> byteBufToIntegers;
+	private final Map<Long, byte[]> longToBytes;
 
 	/**
 	 * 缓存简单字符串
@@ -102,13 +104,15 @@ public class FixedMessagePool implements MessagePool {
 		}
 
 		// 缓存整数
-		byteBufToIntegers = new HashMap<ByteBuf, IntegerMessage>(ReplyKey.values().length, 1.0f);
+		byteBufToIntegers = new HashMap<ByteBuf, IntegerMessage>(SIZE_CACHED_INTEGER_NUMBER, 1.0f);
+		longToBytes = new HashMap<Long, byte[]>(SIZE_CACHED_INTEGER_NUMBER, 1.0f);
 		for (long value = MIN_CACHED_INTEGER_NUMBER; value < MAX_CACHED_INTEGER_NUMBER; value++) {
-			ByteBuf key = Unpooled.unreleasableBuffer(Unpooled.wrappedBuffer(
-					Long.toString(value).getBytes(CharsetUtil.US_ASCII))).asReadOnly();
+			byte[] keyBytes = CacheForgeCodecUtil.longToAsciiBytes(value);
+			ByteBuf keyBuf = Unpooled.unreleasableBuffer(Unpooled.wrappedBuffer(keyBytes)).asReadOnly();
 			IntegerMessage msg = new IntegerMessage(value);
 
-			byteBufToIntegers.put(key, msg);
+			byteBufToIntegers.put(keyBuf, msg);
+			longToBytes.put(value, keyBytes);
 		}
 
 	}
@@ -134,5 +138,8 @@ public class FixedMessagePool implements MessagePool {
 		return byteBufToIntegers.get(value);
 	}
 
-
+	@Override
+	public byte[] getBytesOfInteger(long value) {
+		return longToBytes.get(value);
+	}
 }

@@ -17,4 +17,6 @@ public interface MessagePool {
 	ErrorMessage getError(ByteBuf content);
 
 	IntegerMessage getInteger(ByteBuf content);
+
+	byte[] getBytesOfInteger(long value);
 }

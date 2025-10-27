@@ -49,7 +49,7 @@ public enum MessageType {
 	 * @param decodeInlineCommands 是否解码内联命令
 	 * @return 消息类型
 	 */
-	public static MessageType readForm(ByteBuf in, boolean decodeInlineCommands) {
+	public static MessageType readFrom(ByteBuf in, boolean decodeInlineCommands) {
 		final int initialIndex = in.readerIndex();
 		final MessageType type = valueOf(in.readByte());
 		if (type == INLINE_COMMAND) {
@@ -59,6 +59,18 @@ public enum MessageType {
 			in.readerIndex(initialIndex);
 		}
 		return type;
+	}
+
+
+	/**
+	 * 写入消息类型
+	 * @param out 输出流
+	 */
+	public void writeTo(ByteBuf out) {
+		if (type == null) {
+			return;
+		}
+		out.writeByte(type.byteValue());
 	}
 
 
