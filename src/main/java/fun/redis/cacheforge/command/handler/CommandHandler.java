@@ -10,6 +10,6 @@ import io.netty.channel.ChannelHandlerContext;
  * @date 2025/10/26
  */
 public interface CommandHandler {
-	void handle(Command command, ChannelHandlerContext ctx);
+	void handle( ChannelHandlerContext ctx, Command command);
 	boolean isWriteCommand();
 }

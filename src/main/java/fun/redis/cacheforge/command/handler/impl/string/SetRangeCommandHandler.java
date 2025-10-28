@@ -3,44 +3,49 @@ package fun.redis.cacheforge.command.handler.impl.string;
 import fun.redis.cacheforge.command.handler.WriteCommandHandler;
 import fun.redis.cacheforge.command.model.Command;
 import fun.redis.cacheforge.storage.repo.StringStore;
-import fun.redis.cacheforge.utils.MessageUtil;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
 import static fun.redis.cacheforge.utils.MessageUtil.*;
 
 /**
- * append命令处理器
+ * setrange命令处理器
  * @author huangtaiji
  * @date 2025/10/28
  */
 @Slf4j
-public class AppendCommandHandler implements WriteCommandHandler {
+public class SetRangeCommandHandler implements WriteCommandHandler {
+
 	@Override
 	public void handle(ChannelHandlerContext ctx, Command command) {
 		try {
 			String[] args = command.getArgs();
-			if (args.length == 2) {
+			if (args.length == 3) {
 				String key = args[0];
-				String value = args[1];
+				int offset = Integer.parseInt(args[1]);
+				String value = args[2];
 
 				String oldValue = StringStore.get(key);
-				long length;
-				if (oldValue == null) {
-					StringStore.set(key, value);
-					length = value.length();
-				} else {
-					StringStore.set(key, oldValue + value);
-					length = oldValue.length() + value.length();
+				StringBuilder sb = oldValue == null ? new StringBuilder() : new StringBuilder(oldValue);
+				while (offset > sb.length()) {
+					sb.append(" ");
 				}
-				ctx.writeAndFlush(toIntegerMessage(length));
+				for (int i = 0; i < value.length(); i++) {
+					if (offset + i < sb.length()) {
+						sb.setCharAt(offset + i, value.charAt(i));
+					} else {
+						sb.append(value.charAt(i));
+					}
+				}
+				StringStore.set(key, sb.toString());
+				ctx.writeAndFlush(toIntegerMessage(sb.length()));
 			} else {
-				log.error("append命令参数错误");
+				log.error("setrange命令参数错误");
 				// todo
 				ctx.writeAndFlush(toErrorMessage(Err.ERR));
 			}
 		} catch (Exception e) {
-			log.error("append命令异常{}", String.valueOf(e));
+			log.error("setrange命令异常{}", String.valueOf(e));
 			// todo
 			ctx.writeAndFlush(toErrorMessage(Err.ERR));
 		}

@@ -2,20 +2,20 @@ package fun.redis.cacheforge.command.handler.impl.string;
 
 import fun.redis.cacheforge.command.handler.WriteCommandHandler;
 import fun.redis.cacheforge.command.model.Command;
+import fun.redis.cacheforge.protocol.model.bulkString.FullBulkStringMessage;
 import fun.redis.cacheforge.storage.repo.StringStore;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
 import static fun.redis.cacheforge.utils.MessageUtil.*;
 
-
 /**
- * incr命令处理器
- * @author huangtaiji
+ * getdel命令处理器
+ * @author huangtaji
  * @date 2025/10/28
  */
 @Slf4j
-public class IncrCommandHandler implements WriteCommandHandler {
+public class GetDelCommandHandler implements WriteCommandHandler {
 	@Override
 	public void handle(ChannelHandlerContext ctx, Command command) {
 		try {
@@ -23,21 +23,19 @@ public class IncrCommandHandler implements WriteCommandHandler {
 			if (args.length == 1) {
 				String key = args[0];
 				String value = StringStore.get(key);
-				int result;
 				if (value == null) {
-					result = 1;
-				} else {
-					result = Integer.parseInt(value) + 1;
+					ctx.writeAndFlush(FullBulkStringMessage.NULL_INSTANCE);
+					return;
 				}
-				StringStore.set(key, String.valueOf(result));
-				ctx.writeAndFlush(toIntegerMessage(result));
+				StringStore.del(key);
+				ctx.writeAndFlush(toFullBulkStringMessage(value));
 			} else {
-				log.error("incr命令参数错误");
+				log.error("getdel命令参数错误");
 				// todo
 				ctx.writeAndFlush(toErrorMessage(Err.ERR));
 			}
 		} catch (Exception e) {
-			log.error("incr命令异常{}", String.valueOf(e));
+			log.error("getdel命令异常{}", String.valueOf(e));
 			// todo
 			ctx.writeAndFlush(toErrorMessage(Err.ERR));
 		}

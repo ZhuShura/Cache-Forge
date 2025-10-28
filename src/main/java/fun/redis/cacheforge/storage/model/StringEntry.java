@@ -2,6 +2,8 @@ package fun.redis.cacheforge.storage.model;
 
 import lombok.Data;
 
+import java.time.Instant;
+
 /**
  * CacheForge字符串实体
  * @author huangtaiji
@@ -10,24 +12,9 @@ import lombok.Data;
 @Data
 public class StringEntry {
 	private String value;       // 值
-	private Long expireTime;    // 过期时间戳
 
 	public StringEntry(String value) {
 		this.value = value;
-		this.expireTime = null;
-	}
-
-	public StringEntry(String value, Long expireTime) {
-		this.value = value;
-		this.expireTime = expireTime;
-	}
-
-	/**
-	 * 判断是否过期
-	 * @return 是否过期
-	 */
-	public boolean isExpired() {
-		return expireTime != null && expireTime < System.currentTimeMillis();
 	}
 
 	/**

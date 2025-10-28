@@ -26,16 +26,12 @@ public class CacheForgeConstants {
 	 * 过期时间单位
 	 */
 	public enum ExpireUnit {
-		EX("EX"),
-		PX("PX");
+		EX, PX;
 
-		@Getter
-		private final String name;
 		private final long value;
 
-		ExpireUnit(String name) {
-			this.name = name;
-			this.value = name.equals("EX") ? 1000L : 1L;
+		ExpireUnit() {
+			this.value = this.name().equals("EX") ? 1000L : 1L;
 		}
 
 		public long value() {

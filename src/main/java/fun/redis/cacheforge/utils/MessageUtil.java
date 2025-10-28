@@ -116,6 +116,15 @@ public final class MessageUtil {
         return new ArrayMessage(messages);
     }
 
+    /**
+     * 封装成ArrayMessage
+     * @param messages 子消息列表
+     * @return ArrayMessage
+     */
+    public static ArrayMessage toArrayMessage(Message... messages) {
+        return new ArrayMessage(List.of(messages));
+    }
+
 
     // -------------------缓存常用Message--------------------------------
     public enum Reply {

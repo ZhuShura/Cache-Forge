@@ -1,9 +1,7 @@
 package fun.redis.cacheforge.config;
 
 import fun.redis.cacheforge.command.CommandRegistry;
-import fun.redis.cacheforge.command.handler.CommandHandler;
 import fun.redis.cacheforge.command.handler.impl.CommandCommandHandler;
-import fun.redis.cacheforge.command.handler.impl.DelCommandHandler;
 import fun.redis.cacheforge.command.handler.impl.string.*;
 
 public class ServerConfig {
@@ -12,17 +10,22 @@ public class ServerConfig {
     public ServerConfig() {
         // ---------------------Normal-------------------
         CommandRegistry.register("command", new CommandCommandHandler());
-        CommandRegistry.register("del", new DelCommandHandler());
         // ---------------------String-------------------
-        CommandRegistry.register("set", new SetCommandHandler());
-        CommandRegistry.register("get", new GetCommandHandler());
-        CommandRegistry.register("mget", new MGetCommandHandler());
-        CommandRegistry.register("mset", new MSetCommandHandler());
-        CommandRegistry.register("incr", new IncrCommandHandler());
-        CommandRegistry.register("decr", new DecrCommandHandler());
-        CommandRegistry.register("incrby", new IncrByCommandHandler());
-        CommandRegistry.register("decrby", new DecrByCommandHandler());
         CommandRegistry.register("append", new AppendCommandHandler());
-        CommandRegistry.register("strlen", new StrlenCommandHandler());
+        CommandRegistry.register("decrby", new DecrByCommandHandler());
+        CommandRegistry.register("decr", new DecrCommandHandler());
+        CommandRegistry.register("get", new GetCommandHandler());
+        CommandRegistry.register("getDel", new GetDelCommandHandler());
+        CommandRegistry.register("getex", new GetExCommandHandler());
+        CommandRegistry.register("getrange", new GetRangeCommandHandler());
+        CommandRegistry.register("incrby", new IncrByCommandHandler());
+        CommandRegistry.register("incr", new IncrCommandHandler());
+        CommandRegistry.register("lcs", new LCSCommandHandler());
+        CommandRegistry.register("psetex", new PSetExCommandHandler());
+        CommandRegistry.register("set", new SetCommandHandler());
+        CommandRegistry.register("setex", new SetExCommandHandler());
+        CommandRegistry.register("setnx", new SetNxCommandHandler());
+        CommandRegistry.register("setrange", new SetRangeCommandHandler());
+        CommandRegistry.register("strlen", new StrLenCommandHandler());
     }
 }
