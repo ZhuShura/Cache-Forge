@@ -18,6 +18,8 @@ import fun.redis.cacheforge.command.model.Command;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.internal.StringUtil;
 
+import static fun.redis.cacheforge.utils.CacheForgeCodecUtil.longToAsciiBytes;
+
 /**
  * 消息工具类
  * 1.接收{@link Message}转换成{@link Command}
@@ -104,14 +106,29 @@ public final class MessageUtil {
     }
 
     /**
-     * 将字符串列表转换为ArrayMessage
+     * 将整数转换为FullBulkStringMessage
+     * @param value 值
+     * @return FullBulkStringMessage
+     */
+    public static FullBulkStringMessage toFullBulkStringMessage(Integer value) {
+        return new FullBulkStringMessage(Unpooled.wrappedBuffer(longToAsciiBytes(value)));
+    }
+
+    /**
+     * 将列表转换为ArrayMessage
      * @param values 值列表
      * @return ArrayMessage
      */
-    public static ArrayMessage toArrayMessage(List<String> values) {
+    public static <T> ArrayMessage toArrayMessage(List<T> values) {
         List<Message> messages = new ArrayList<>();
-        for (String value : values) {
-            messages.add(toFullBulkStringMessage(value));
+        for (T value : values) {
+            if (value instanceof String v) {
+                messages.add(toFullBulkStringMessage(v));
+            } else if (value instanceof Integer v) {
+                messages.add(toIntegerMessage(v));
+            } else {
+                throw new CacheForgeCodecException("不支持的类型");
+            }
         }
         return new ArrayMessage(messages);
     }
