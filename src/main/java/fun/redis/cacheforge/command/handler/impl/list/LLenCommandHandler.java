@@ -4,7 +4,6 @@ import fun.redis.cacheforge.command.handler.ReadCommandHandler;
 import fun.redis.cacheforge.command.model.Command;
 import fun.redis.cacheforge.protocol.model.bulkString.FullBulkStringMessage;
 import fun.redis.cacheforge.storage.repo.ListStore;
-import fun.redis.cacheforge.utils.MessageUtil;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,11 +34,11 @@ public class LLenCommandHandler implements ReadCommandHandler {
                 log.info("服务器返回: {}", list.size());
             } else {
                 log.error("llen命令参数数量错误");
-                ctx.writeAndFlush(toErrorMessage(MessageUtil.Err.ERR));
+                ctx.writeAndFlush(toErrorMessage(Err.ERR));
             }
         } catch (Exception e) {
             log.error("llen命令异常", e);
-            ctx.writeAndFlush(toErrorMessage(MessageUtil.Err.ERR));
+            ctx.writeAndFlush(toErrorMessage(Err.ERR));
         }
     }
 }
