@@ -107,6 +107,7 @@ public final class MessageUtil {
      * @param value 值
      * @return FullBulkStringMessage
      */
+    @Deprecated
     public static FullBulkStringMessage toFullBulkStringMessage(Integer value) {
         return new FullBulkStringMessage(Unpooled.wrappedBuffer(longToAsciiBytes(value)));
     }
