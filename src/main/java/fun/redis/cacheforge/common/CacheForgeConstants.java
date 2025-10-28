@@ -1,6 +1,7 @@
 package fun.redis.cacheforge.common;
 
 import fun.redis.cacheforge.utils.CacheForgeCodecUtil;
+import lombok.Getter;
 
 /**
  * 项目常量
@@ -20,4 +21,25 @@ public class CacheForgeConstants {
 	public static final int POSITIVE_LONG_MAX_LENGTH = 19;                                          // long正数的最大长度
 	public static final int LONG_MAX_LENGTH = POSITIVE_LONG_MAX_LENGTH + 1;                         // long最大长度
 	public static final int MESSAGE_MAX_LENGTH = 512 * 1024 * 1024;                                 // 命令单个参数最大长度 512MB
+
+	/**
+	 * 过期时间单位
+	 */
+	public enum ExpireUnit {
+		EX("EX"),
+		PX("PX");
+
+		@Getter
+		private final String name;
+		private final long value;
+
+		ExpireUnit(String name) {
+			this.name = name;
+			this.value = name.equals("EX") ? 1000L : 1L;
+		}
+
+		public long value() {
+			return value;
+		}
+	}
 }
