@@ -1,6 +1,5 @@
 package fun.redis.cacheforge.utils;
 
-import fun.redis.cacheforge.command.CommandRegistry;
 import fun.redis.cacheforge.common.CacheForgeCodecException;
 import fun.redis.cacheforge.protocol.model.Message;
 import fun.redis.cacheforge.protocol.model.array.ArrayMessage;
@@ -15,8 +14,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import fun.redis.cacheforge.command.model.Command;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.internal.StringUtil;
 
 import static fun.redis.cacheforge.utils.CacheForgeCodecUtil.longToAsciiBytes;
 

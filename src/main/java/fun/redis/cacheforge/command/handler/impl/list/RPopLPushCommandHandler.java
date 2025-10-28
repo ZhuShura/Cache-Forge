@@ -4,12 +4,10 @@ import fun.redis.cacheforge.command.handler.WriteCommandHandler;
 import fun.redis.cacheforge.command.model.Command;
 import fun.redis.cacheforge.protocol.model.bulkString.FullBulkStringMessage;
 import fun.redis.cacheforge.storage.repo.ListStore;
-import fun.redis.cacheforge.utils.MessageUtil;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import static fun.redis.cacheforge.utils.MessageUtil.*;

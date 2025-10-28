@@ -62,15 +62,6 @@ public class LInsertCommandHandler implements WriteCommandHandler {
     }
 
     private enum Position {
-        BEFORE("BEFORE"),
-        AFTER("AFTER");
-
-        private final String value;
-        Position(String value) {
-            this.value = value;
-        }
-        public String value() {
-            return value;
-        }
+        BEFORE, AFTER
     }
 }

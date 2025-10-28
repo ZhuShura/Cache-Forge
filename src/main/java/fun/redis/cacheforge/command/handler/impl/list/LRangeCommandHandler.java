@@ -4,7 +4,6 @@ import fun.redis.cacheforge.command.handler.ReadCommandHandler;
 import fun.redis.cacheforge.command.model.Command;
 import fun.redis.cacheforge.protocol.model.bulkString.FullBulkStringMessage;
 import fun.redis.cacheforge.storage.repo.ListStore;
-import fun.redis.cacheforge.utils.MessageUtil;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
