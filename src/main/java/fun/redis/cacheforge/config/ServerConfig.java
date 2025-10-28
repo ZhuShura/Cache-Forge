@@ -33,5 +33,10 @@ public class ServerConfig {
         CommandRegistry.register("lindex", new LIndexCommandHandler());
         CommandRegistry.register("llen", new LLenCommandHandler());
         CommandRegistry.register("lset", new LSetCommandHandler());
+        CommandRegistry.register("linsert", new LInsertCommandHandler());
+
+        CommandRegistry.register("ltrim", new LTrimCommandHandler());
+        CommandRegistry.register("lrem", new LRemCommandHandler());
+        CommandRegistry.register("lmove", new LMoveCommandHandler());
     }
 }
