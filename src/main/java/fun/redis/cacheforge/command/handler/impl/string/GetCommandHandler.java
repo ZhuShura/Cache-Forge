@@ -2,28 +2,39 @@ package fun.redis.cacheforge.command.handler.impl.string;
 
 import fun.redis.cacheforge.command.handler.ReadCommandHandler;
 import fun.redis.cacheforge.command.model.Command;
+import fun.redis.cacheforge.protocol.model.bulkString.FullBulkStringMessage;
 import fun.redis.cacheforge.protocol.model.generalizedInline.ErrorMessage;
 import fun.redis.cacheforge.storage.repo.StringStore;
-import fun.redis.cacheforge.utils.HandleUtil;
+import fun.redis.cacheforge.utils.MessageUtil;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
+import static fun.redis.cacheforge.utils.MessageUtil.*;
+
 /**
  * get命令处理器
- * @author hua
- * @date 2025/10/27
+ * @author huangtaji
+ * @date 2025/10/28
  */
 @Slf4j
 public class GetCommandHandler implements ReadCommandHandler {
     @Override
-    public void handle(Command command, ChannelHandlerContext ctx) {
+    public void handle(ChannelHandlerContext ctx, Command command) {
         try {
-            String key = command.getArgs()[0];
-            HandleUtil.checkKey(key);
-            ctx.writeAndFlush(HandleUtil.toFullBulkStringMessage(StringStore.get(key)));
+            String[] args = command.getArgs();
+            if (args.length == 1) {
+                String key = command.getArgs()[0];
+                String value = StringStore.get(key);
+                if (value == null) {
+                    ctx.writeAndFlush(FullBulkStringMessage.NULL_INSTANCE);
+                    return;
+                }
+                ctx.writeAndFlush(toFullBulkStringMessage(value));
+            }
         } catch (Exception e) {
             log.error("get命令异常{}", String.valueOf(e));
-            ctx.writeAndFlush(new ErrorMessage(HandleUtil.ERROR));
+            // todo
+            ctx.writeAndFlush(toErrorMessage(Err.ERR));
         }
     }
 }
