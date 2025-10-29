@@ -105,7 +105,7 @@ public final class MessageUtil {
 
     /**
      * 将整数转换为FullBulkStringMessage
-     * @param value 值
+     * @param values 值
      * @return FullBulkStringMessage
      */
     public static <T> ArrayMessage basicToArrayMessage(List<T> values) {
