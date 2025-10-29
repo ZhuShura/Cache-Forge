@@ -45,8 +45,10 @@ public class MessageHandler extends SimpleChannelInboundHandler<Message> {
                     return;
                 }
                 Command command = toCommand(children);
+                log.info("---------command start---------");
                 log.info("命令：{}，参数：{}", command.getName(), command.getArgs());
                 CommandRegistry.get(commandName).handle(ctx, command);
+                log.info("----------command end----------");
             }
         } else {
             log.info("111");

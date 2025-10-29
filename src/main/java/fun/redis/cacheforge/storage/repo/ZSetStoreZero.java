@@ -1,9 +1,7 @@
 package fun.redis.cacheforge.storage.repo;
 
-import com.sun.source.tree.Tree;
 import fun.redis.cacheforge.storage.model.ZSetEntry;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
@@ -14,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author hua
  * @date 2025/10/26
  */
-public class ZSetStore {
+public class ZSetStoreZero {
     /**
      * 默认按score升序排序, score相同时按member字典序排序
      */
