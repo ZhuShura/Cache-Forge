@@ -117,7 +117,7 @@ public final class MessageUtil {
      * @param values 值列表
      * @return ArrayMessage
      */
-    public static <T> ArrayMessage toArrayMessage(List<T> values) {
+    public static <T> ArrayMessage basicToArrayMessage(List<T> values) {
         List<Message> messages = new ArrayList<>();
         for (T value : values) {
             if (value instanceof String v) {

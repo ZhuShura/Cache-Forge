@@ -3,7 +3,6 @@ package fun.redis.cacheforge.command.handler.impl.list;
 import fun.redis.cacheforge.command.handler.WriteCommandHandler;
 import fun.redis.cacheforge.command.model.Command;
 import fun.redis.cacheforge.storage.repo.ListStore;
-import fun.redis.cacheforge.utils.MessageUtil;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +31,7 @@ public class LPopCommandHandler implements WriteCommandHandler {
                     removed.add(list.remove(0));
                 }
                 ListStore.set(key, list);
-                ctx.writeAndFlush(toArrayMessage(removed));
+                ctx.writeAndFlush(basicToArrayMessage(removed));
                 log.info("服务器返回: {}", removed);
             } else {
                 log.error("lpop命令参数数量错误");

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration debug="true" scan="true" scanPeriod="30 seconds">
-
     <!--控制台输出日志信息-->
     <appender name="CONSOLE-LOG" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are  by default assigned the type

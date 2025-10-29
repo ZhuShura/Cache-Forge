@@ -75,7 +75,7 @@ public class LPosCommandHandler implements ReadCommandHandler {
                     }
                     List<Integer> indexes = findIndexesByCount(list, element, num, 0, 0);
                     log.info("服务器返回: {}", indexes);
-                    ctx.writeAndFlush(toArrayMessage(indexes));
+                    ctx.writeAndFlush(basicToArrayMessage(indexes));
                 } else {
                     log.error("lpos命令参数错误");
                     ctx.writeAndFlush(toErrorMessage(Err.ERR));
@@ -122,7 +122,7 @@ public class LPosCommandHandler implements ReadCommandHandler {
                 } else {
                     List<Integer> indexes = findIndexesByCount(list, element, count, index, rank);
                     log.info("服务器返回: {}", indexes);
-                    ctx.writeAndFlush(toArrayMessage(indexes));
+                    ctx.writeAndFlush(basicToArrayMessage(indexes));
                 }
             } else {
                 log.error("lpos命令参数数量错误");

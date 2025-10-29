@@ -31,7 +31,7 @@ public class LRangeCommandHandler implements ReadCommandHandler {
                 start = start >= 0 ? start : list.size() + start;
                 end = end >= 0 ? end : list.size() + end;
                 List<String> range = list.subList(start, end + 1);
-                ctx.writeAndFlush(toArrayMessage(range));
+                ctx.writeAndFlush(basicToArrayMessage(range));
                 log.info("服务器返回: {}", range);
             } else {
                 log.error("lrange命令参数数量错误");
