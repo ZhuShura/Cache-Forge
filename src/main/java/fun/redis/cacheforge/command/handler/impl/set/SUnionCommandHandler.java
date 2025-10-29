@@ -1,6 +1,6 @@
 package fun.redis.cacheforge.command.handler.impl.set;
 
-import fun.redis.cacheforge.command.handler.WriteCommandHandler;
+import fun.redis.cacheforge.command.handler.ReadCommandHandler;
 import fun.redis.cacheforge.command.model.Command;
 import fun.redis.cacheforge.storage.repo.SetStore;
 import io.netty.channel.ChannelHandlerContext;
@@ -14,36 +14,33 @@ import java.util.Set;
 import static fun.redis.cacheforge.utils.MessageUtil.*;
 
 @Slf4j
-public class SDiffStoreCommandHandler implements WriteCommandHandler {
+public class SUnionCommandHandler implements ReadCommandHandler {
     @Override
     public void handle(ChannelHandlerContext ctx, Command command) {
         try {
             String[] args = command.getArgs();
-            if (args.length >= 2) {
-                String destination = args[0];
-                String firstKey = args[1];
-                List<String> keys = List.of(args).subList(2, args.length);
-                Set<String> firstSet = SetStore.get(firstKey);
-                if (firstSet == null) {
-                    firstSet = new HashSet<>();
+            if (args.length >= 1) {
+                String firstKey = args[0];
+                List<String> keys = List.of(args).subList(1, args.length);
+                Set<String> set = SetStore.get(firstKey);
+                if (set == null) {
+                    set = new HashSet<>();
                 }
                 for (String key : keys) {
                     Set<String> otherSet = SetStore.get(key);
                     if (otherSet != null) {
-                        firstSet.removeAll(otherSet);
+                        set.addAll(otherSet);
                     }
                 }
-                Set<String> set = new HashSet<>(firstSet);
-                SetStore.set(destination, set);
                 List<String> result = new ArrayList<>(set);
                 log.info("服务器返回: {}", result);
-                ctx.writeAndFlush(toIntegerMessage(result.size()));
+                ctx.writeAndFlush(basicToArrayMessage(result));
             } else {
-                log.error("sdiffstore命令参数数量错误");
+                log.error("sdiff命令参数数量错误");
                 ctx.writeAndFlush(toErrorMessage(Err.ERR));
             }
         } catch (Exception e) {
-            log.error("sdiffstore命令异常", e);
+            log.error("sdiff命令异常", e);
             ctx.writeAndFlush(toErrorMessage(Err.ERR));
         }
     }

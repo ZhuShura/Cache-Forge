@@ -56,4 +56,12 @@ public class GlobalStore {
 	public static void delExpire(String key) {
 		EXPIRE_MAP.remove(key);
 	}
+
+	public enum keyType {
+		STRING,
+		SET,
+		HASH,
+		LIST,
+		ZSET
+	}
 }

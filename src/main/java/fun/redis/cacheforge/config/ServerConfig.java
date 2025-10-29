@@ -48,7 +48,7 @@ public class ServerConfig {
         CommandRegistry.register("rpop", new RPopCommandHandler());
         CommandRegistry.register("rpoplpush", new RPopLPushCommandHandler());
         CommandRegistry.register("rpush", new RPushCommandHandler());
-        // ---------------------Set-------------------
+        // done-----------------Set-------------------
         CommandRegistry.register("sadd", new SAddCommandHandler());
         CommandRegistry.register("scard", new SCardCommandHandler());
         CommandRegistry.register("sdiff", new SDiffCommandHandler());
@@ -61,5 +61,10 @@ public class ServerConfig {
         CommandRegistry.register("smismember", new SMIsMemberCommandHandler());
         CommandRegistry.register("smove", new SMoveCommandHandler());
         CommandRegistry.register("spop", new SPopCommandHandler());
+        CommandRegistry.register("srandmember", new SRandMemberCommandHandler());
+        CommandRegistry.register("srem", new SRemCommandHandler());
+        CommandRegistry.register("sunion", new SUnionCommandHandler());
+        CommandRegistry.register("sunionstore", new SUnionStoreCommandHandler());
+
     }
 }

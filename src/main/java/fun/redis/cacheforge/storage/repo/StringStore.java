@@ -1,11 +1,13 @@
 package fun.redis.cacheforge.storage.repo;
 
-import fun.redis.cacheforge.common.CacheForgeConstants;
+import fun.redis.cacheforge.common.CacheForgeCodecException;
 import fun.redis.cacheforge.storage.model.StringEntry;
 import fun.redis.cacheforge.utils.TimeUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static fun.redis.cacheforge.storage.repo.GlobalStore.*;
 
 /**
  * 字符串存储仓库
@@ -22,6 +24,7 @@ public class StringStore {
      */
     public static void set(String key, String value) {
         STRING_MAP.put(key, new StringEntry(value));
+        setType(key, keyType.STRING.toString());
     }
 
 
@@ -30,16 +33,17 @@ public class StringStore {
      * @param key 键
      * @return 值
      */
-    public static String get(String key) {
+    public static String get(String key) throws CacheForgeCodecException {
         StringEntry stringEntry = STRING_MAP.get(key);
         if (stringEntry == null) {
             return null;
         } else {
             if (TimeUtil.isExpire(key)) {
                STRING_MAP.remove(key, stringEntry);
-               GlobalStore.delExpire(key);
+               delExpire(key);
                return null;
             }
+            if (!getType(key).equals(keyType.STRING.toString())) throw new CacheForgeCodecException("类型不匹配");
             return stringEntry.getValue();
         }
     }

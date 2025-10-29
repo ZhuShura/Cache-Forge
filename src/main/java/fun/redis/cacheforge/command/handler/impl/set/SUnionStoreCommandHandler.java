@@ -14,7 +14,7 @@ import java.util.Set;
 import static fun.redis.cacheforge.utils.MessageUtil.*;
 
 @Slf4j
-public class SDiffStoreCommandHandler implements WriteCommandHandler {
+public class SUnionStoreCommandHandler implements WriteCommandHandler {
     @Override
     public void handle(ChannelHandlerContext ctx, Command command) {
         try {
@@ -30,7 +30,7 @@ public class SDiffStoreCommandHandler implements WriteCommandHandler {
                 for (String key : keys) {
                     Set<String> otherSet = SetStore.get(key);
                     if (otherSet != null) {
-                        firstSet.removeAll(otherSet);
+                        firstSet.addAll(otherSet);
                     }
                 }
                 Set<String> set = new HashSet<>(firstSet);

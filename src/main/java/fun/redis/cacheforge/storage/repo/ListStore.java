@@ -1,10 +1,13 @@
 package fun.redis.cacheforge.storage.repo;
 
+import fun.redis.cacheforge.common.CacheForgeCodecException;
 import fun.redis.cacheforge.storage.model.ListEntry;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static fun.redis.cacheforge.storage.repo.GlobalStore.*;
 
 /**
  * 列表存储仓库
@@ -22,6 +25,7 @@ public class ListStore {
      */
     public static void set(String key, List<String> values) {
         LIST_MAP.put(key, new ListEntry(values));
+        GlobalStore.setType(key, GlobalStore.keyType.LIST.toString());
     }
 
     /**
@@ -33,6 +37,7 @@ public class ListStore {
         if (LIST_MAP.get(key) == null) {
             return null;
         }
+        if (!getType(key).equals(keyType.LIST.toString())) throw new CacheForgeCodecException("类型不匹配");
         return LIST_MAP.get(key).getValue();
     }
 

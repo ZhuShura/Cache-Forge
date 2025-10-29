@@ -40,11 +40,11 @@ public class LSetCommandHandler implements WriteCommandHandler {
                 log.info("服务器返回: {}", list.size());
             } else {
                 log.error("lset命令参数数量错误");
-                ctx.writeAndFlush(toErrorMessage(MessageUtil.Err.ERR));
+                ctx.writeAndFlush(toErrorMessage(Err.ERR));
             }
         } catch (Exception e) {
             log.error("lset命令异常", e);
-            ctx.writeAndFlush(toErrorMessage(MessageUtil.Err.ERR));
+            ctx.writeAndFlush(toErrorMessage(Err.ERR));
         }
     }
 }
