@@ -35,10 +35,12 @@ public final class MessageUtil {
      *
      * @param bMsg 批量字符串消息
      * @return 消息的字符串形式
+     *
+     * @since 2.0 重大修改空字符串不再视为null
      */
     public static String getStringFromBulkMessage(FullBulkStringMessage bMsg) {
         ByteBuf content = bMsg.content();                                      // 获取二进制内容
-        if (content == null || !content.isReadable()) {
+        if (content == null) {
             return null;
         }
         return content.toString(StandardCharsets.UTF_8);
@@ -104,17 +106,49 @@ public final class MessageUtil {
     }
 
     /**
-     * 将字符串列表转换为ArrayMessage
-     * @param values 值列表
-     * @return ArrayMessage
+     * 基础类型列表转换为ArrayMassage
+     * @param values 基础类型列表
+     * @return 单一类型ArrayMessage
      */
-    public static ArrayMessage toArrayMessage(List<String> values) {
+    public static <T> ArrayMessage basicToArrayMessage(List<T> values) {
         List<Message> messages = new ArrayList<>();
-        for (String value : values) {
-            messages.add(toFullBulkStringMessage(value));
+        for (T value : values) {
+            if (value instanceof String v) {
+                messages.add(toFullBulkStringMessage(v));
+            } else if (value instanceof Integer v) {
+                messages.add(toIntegerMessage(v));
+            } else {
+                throw new CacheForgeCodecException("不支持的类型");
+            }
         }
         return new ArrayMessage(messages);
     }
+
+
+    /**
+     * 将转换为ArrayMessage
+     * @param values 值列表
+     * @return ArrayMessage
+     */
+    public static <T extends Message> ArrayMessage toArrayMessage(List<T> values) {
+        List<Message> messages = new ArrayList<>();
+        for (T value : values) {
+            if (value instanceof FullBulkStringMessage) {
+                messages.add((FullBulkStringMessage)value);
+            } else if (value instanceof SimpleStringMessage) {
+                messages.add((SimpleStringMessage)value);
+            } else if (value instanceof IntegerMessage) {
+                messages.add((IntegerMessage)value);
+            } else if (value instanceof ErrorMessage) {
+                messages.add((ErrorMessage)value);
+            } else if (value instanceof ArrayMessage) {
+                messages.add((ArrayMessage)value);
+            }
+        }
+        return new ArrayMessage(messages);
+    }
+
+
 
     /**
      * 封装成ArrayMessage

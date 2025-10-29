@@ -19,8 +19,12 @@ public class ServerConfig {
         CommandRegistry.register("getex", new GetExCommandHandler());
         CommandRegistry.register("getrange", new GetRangeCommandHandler());
         CommandRegistry.register("incrby", new IncrByCommandHandler());
+        CommandRegistry.register("incrbyfloat", new IncrByFloatCommandHandler());
         CommandRegistry.register("incr", new IncrCommandHandler());
         CommandRegistry.register("lcs", new LCSCommandHandler());
+        CommandRegistry.register("mget", new MGetCommandHandler());
+        CommandRegistry.register("mset", new MSetCommandHandler());
+        CommandRegistry.register("msetnx", new MSetNxCommandHandler());
         CommandRegistry.register("psetex", new PSetExCommandHandler());
         CommandRegistry.register("set", new SetCommandHandler());
         CommandRegistry.register("setex", new SetExCommandHandler());

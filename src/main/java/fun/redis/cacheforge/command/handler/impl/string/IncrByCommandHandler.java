@@ -1,6 +1,7 @@
 package fun.redis.cacheforge.command.handler.impl.string;
 import fun.redis.cacheforge.command.handler.WriteCommandHandler;
 import fun.redis.cacheforge.command.model.Command;
+import fun.redis.cacheforge.common.CacheForgeCodecException;
 import fun.redis.cacheforge.storage.repo.StringStore;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
@@ -22,10 +23,13 @@ public class IncrByCommandHandler implements WriteCommandHandler{
 			if (args.length == 2) {
 				String key = args[0];
 				int increment = Integer.parseInt(args[1]);
+
 				String value = StringStore.get(key);
 				int result;
 				if (value == null) {
 					result = increment;
+				} else if (value.isEmpty()) {
+					throw new CacheForgeCodecException("Redis官方认为有问题");
 				} else {
 					result = Integer.parseInt(value) + increment;
 				}
