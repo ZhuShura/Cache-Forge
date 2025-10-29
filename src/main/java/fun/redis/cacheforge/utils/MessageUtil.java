@@ -1,5 +1,6 @@
 package fun.redis.cacheforge.utils;
 
+import fun.redis.cacheforge.command.CommandRegistry;
 import fun.redis.cacheforge.common.CacheForgeCodecException;
 import fun.redis.cacheforge.protocol.model.Message;
 import fun.redis.cacheforge.protocol.model.array.ArrayMessage;
@@ -14,8 +15,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import fun.redis.cacheforge.command.model.Command;
-
-import static fun.redis.cacheforge.utils.CacheForgeCodecUtil.longToAsciiBytes;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.util.internal.StringUtil;
 
 /**
  * 消息工具类
@@ -34,10 +35,12 @@ public final class MessageUtil {
      *
      * @param bMsg 批量字符串消息
      * @return 消息的字符串形式
+     *
+     * @since 2.0 重大修改空字符串不再视为null
      */
     public static String getStringFromBulkMessage(FullBulkStringMessage bMsg) {
         ByteBuf content = bMsg.content();                                      // 获取二进制内容
-        if (content == null || !content.isReadable()) {
+        if (content == null) {
             return null;
         }
         return content.toString(StandardCharsets.UTF_8);
@@ -107,16 +110,6 @@ public final class MessageUtil {
      * @param value 值
      * @return FullBulkStringMessage
      */
-    @Deprecated
-    public static FullBulkStringMessage toFullBulkStringMessage(Integer value) {
-        return new FullBulkStringMessage(Unpooled.wrappedBuffer(longToAsciiBytes(value)));
-    }
-
-    /**
-     * 将列表转换为ArrayMessage
-     * @param values 值列表
-     * @return ArrayMessage
-     */
     public static <T> ArrayMessage basicToArrayMessage(List<T> values) {
         List<Message> messages = new ArrayList<>();
         for (T value : values) {
@@ -129,6 +122,41 @@ public final class MessageUtil {
             }
         }
         return new ArrayMessage(messages);
+    }
+
+
+    /**
+     * 将转换为ArrayMessage
+     * @param values 值列表
+     * @return ArrayMessage
+     */
+    public static <T extends Message> ArrayMessage toArrayMessage(List<T> values) {
+        List<Message> messages = new ArrayList<>();
+        for (T value : values) {
+            if (value instanceof FullBulkStringMessage) {
+                messages.add((FullBulkStringMessage)value);
+            } else if (value instanceof SimpleStringMessage) {
+                messages.add((SimpleStringMessage)value);
+            } else if (value instanceof IntegerMessage) {
+                messages.add((IntegerMessage)value);
+            } else if (value instanceof ErrorMessage) {
+                messages.add((ErrorMessage)value);
+            } else if (value instanceof ArrayMessage) {
+                messages.add((ArrayMessage)value);
+            }
+        }
+        return new ArrayMessage(messages);
+    }
+
+
+
+    /**
+     * 封装成ArrayMessage
+     * @param messages 子消息列表
+     * @return ArrayMessage
+     */
+    public static ArrayMessage toArrayMessage(Message... messages) {
+        return new ArrayMessage(List.of(messages));
     }
 
 

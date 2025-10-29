@@ -23,13 +23,17 @@ public class GetCommandHandler implements ReadCommandHandler {
         try {
             String[] args = command.getArgs();
             if (args.length == 1) {
-                String key = command.getArgs()[0];
+                String key =args[0];
                 String value = StringStore.get(key);
                 if (value == null) {
                     ctx.writeAndFlush(FullBulkStringMessage.NULL_INSTANCE);
                     return;
                 }
                 ctx.writeAndFlush(toFullBulkStringMessage(value));
+            } else {
+                log.error("get命令参数错误");
+                // todo
+                ctx.writeAndFlush(toErrorMessage(Err.ERR));
             }
         } catch (Exception e) {
             log.error("get命令异常{}", String.valueOf(e));

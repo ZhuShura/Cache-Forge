@@ -10,7 +10,7 @@ public class Command {
 	private final String[] args;
 
 	public Command(String name, String[] args) {
-		this.name = name;
+		this.name = name.toUpperCase();
 		this.args = args;
 	}
 

@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CommandCommandHandler implements WriteCommandHandler {
     @Override
-    public void handle(ChannelHandlerContext ctx, Command command) {
+    public void handle(ChannelHandlerContext ctx, Command command ) {
         ctx.writeAndFlush(new SimpleStringMessage("OK"));
     }
 }
