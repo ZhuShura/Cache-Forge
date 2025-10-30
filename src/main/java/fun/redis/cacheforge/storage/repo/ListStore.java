@@ -24,6 +24,8 @@ public class ListStore {
      * @param values 值
      */
     public static void set(String key, List<String> values) {
+        if (getType(key) != null && !getType(key).equals(keyType.LIST.toString()))
+            throw new CacheForgeCodecException("类型不匹配");
         LIST_MAP.put(key, new ListEntry(values));
         GlobalStore.setType(key, GlobalStore.keyType.LIST.toString());
     }

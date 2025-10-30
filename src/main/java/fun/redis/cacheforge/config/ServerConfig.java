@@ -5,6 +5,7 @@ import fun.redis.cacheforge.command.handler.impl.CommandCommandHandler;
 import fun.redis.cacheforge.command.handler.impl.set.*;
 import fun.redis.cacheforge.command.handler.impl.string.*;
 import fun.redis.cacheforge.command.handler.impl.list.*;
+import fun.redis.cacheforge.command.handler.impl.zset.*;
 
 public class ServerConfig {
     public final int PORT = 6379;
@@ -65,6 +66,14 @@ public class ServerConfig {
         CommandRegistry.register("srem", new SRemCommandHandler());
         CommandRegistry.register("sunion", new SUnionCommandHandler());
         CommandRegistry.register("sunionstore", new SUnionStoreCommandHandler());
+        // todo done-----------------ZSet-------------------
+        CommandRegistry.register("zadd", new ZAddCommandHandler());
+        CommandRegistry.register("zcard", new ZCardCommandHandler());
+        CommandRegistry.register("zcount", new ZCountCommandHandler());
+        CommandRegistry.register("zdiff", new ZDiffCommandHandler());
+        CommandRegistry.register("zdiffstore", new ZDiffStoreCommandHandler());
 
+
+        CommandRegistry.register("zrange", new ZRangeCommandHandler());
     }
 }

@@ -15,7 +15,7 @@
         <file>logs/error.log</file>
 
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} - %-4r %-5p [%t] %C:%L %x - %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} - %-4r %-5p [%t] %C:%L  %X{key} - %m%n</pattern>
         </encoder>
 
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -38,7 +38,7 @@
         <file>logs/info.log</file>
 
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} - %-4r %-5p [%t] %C:%L %x - %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} - %-4r %-5p [%t] %C:%L  %X{key} - %m%n</pattern>
         </encoder>
 
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -63,7 +63,7 @@
         <file>logs/debug.log</file>
 
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} - %-4r %-5p [%t] %C:%L %x - %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss,SSS} - %-4r %-5p [%t] %C:%L  %X{key} - %m%n</pattern>
         </encoder>
 
         <filter class="ch.qos.logback.classic.filter.LevelFilter">

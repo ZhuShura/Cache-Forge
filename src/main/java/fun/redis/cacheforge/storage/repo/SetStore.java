@@ -23,6 +23,8 @@ public class SetStore {
      * @param set 集合
      */
     public static void set(String key, Set<String> set) {
+        if (getType(key) != null && !getType(key).equals(keyType.SET.toString()))
+            throw new CacheForgeCodecException("类型不匹配");
         SET_MAP.put(key, new SetEntry(set));
         setType(key, keyType.SET.toString());
     }

@@ -23,6 +23,8 @@ public class StringStore {
      * @param value 值
      */
     public static void set(String key, String value) {
+        if (getType(key) != null && !getType(key).equals(keyType.STRING.toString()))
+            throw new CacheForgeCodecException("类型不匹配");
         STRING_MAP.put(key, new StringEntry(value));
         setType(key, keyType.STRING.toString());
     }
