@@ -72,7 +72,9 @@ public class ServerConfig {
         CommandRegistry.register("zcount", new ZCountCommandHandler());
         CommandRegistry.register("zdiff", new ZDiffCommandHandler());
         CommandRegistry.register("zdiffstore", new ZDiffStoreCommandHandler());
-
+        CommandRegistry.register("zincrby", new ZIncrbyCommandHandler());
+        CommandRegistry.register("zinter", new ZInterCommandHandler());
+        CommandRegistry.register("zintercard", new ZInterCardCommandHandler());
 
         CommandRegistry.register("zrange", new ZRangeCommandHandler());
     }

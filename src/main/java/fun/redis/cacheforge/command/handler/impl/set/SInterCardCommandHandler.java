@@ -24,15 +24,8 @@ public class SInterCardCommandHandler implements ReadCommandHandler {
                     return;
                 }
                 List<String> keys = List.of(args).subList(1, numKeys + 1);
-                List<Set<String>> sets = new ArrayList<>();
-                for (String key : keys) {
-                    Set<String> set = SetStore.get(key);
-                    if (set == null) {
-                        ctx.writeAndFlush(toIntegerMessage(0));
-                        return;
-                    }
-                    sets.add(set);
-                }
+                List<Set<String>> sets = new ArrayList<>(keys.stream().map(SetStore::get).toList());
+
                 // 从小到大取交集
                 sets.sort(Comparator.comparingInt(Set::size));
                 int limit = 0;
